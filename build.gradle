@@ -18,13 +18,15 @@ plugins {
     id 'com.palantir.consistent-versions' version '2.0.0'
     id 'java-gradle-plugin'
     id 'groovy'
+
+    id("scripts.publishing-config")
 }
 
 apply plugin: 'com.palantir.external-publish-jar'
 apply plugin: 'com.palantir.java-format'
 
 group 'eu.upwolf.gradle.gitversion'
-version System.env.CIRCLE_TAG ?: gitVersion()
+version gitVersion()
 
 repositories {
     mavenCentral()
