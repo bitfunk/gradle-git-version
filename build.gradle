@@ -23,7 +23,7 @@ plugins {
 apply plugin: 'com.palantir.external-publish-jar'
 apply plugin: 'com.palantir.java-format'
 
-group 'com.palantir.gradle.gitversion'
+group 'eu.upwolf.gradle.gitversion'
 version System.env.CIRCLE_TAG ?: gitVersion()
 
 repositories {
@@ -73,15 +73,15 @@ tasks.withType(JavaCompile) {
 }
 
 pluginBundle {
-    website = 'https://github.com/palantir/gradle-git-version'
-    vcsUrl = 'https://github.com/palantir/gradle-git-version'
+    website = 'https://github.com/wmontwe/gradle-git-version'
+    vcsUrl = 'https://github.com/wmontwe/gradle-git-version'
     description = 'Gradle Git-Version is a plugin that generates a version for use with Gradle by calling git-describe.'
     tags = ['git', 'version']
 
     plugins {
         gitVersionPlugin {
-            id = 'com.palantir.git-version'
-            displayName = 'Palantir Gradle Git-Version'
+            id = 'eu.upwolf.git-version'
+            displayName = 'Upwolf Gradle Git-Version'
         }
     }
 }
