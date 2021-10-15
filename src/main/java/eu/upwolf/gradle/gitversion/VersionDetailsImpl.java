@@ -20,6 +20,7 @@ import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.swiftzer.semver.SemVer;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
@@ -49,6 +50,17 @@ final class VersionDetailsImpl implements VersionDetails {
         }
 
         return description() + (isClean() ? "" : ".dirty");
+    }
+
+    @Override
+    public int getVersionCode() {
+        if (description() == null) {
+            return -1;
+        }
+
+        SemVer version = SemVer.parse(description());
+
+        return version.getMajor() * 10000 + version.getMinor() * 100 + version.getPatch();
     }
 
     private boolean isClean() {
@@ -170,8 +182,15 @@ final class VersionDetailsImpl implements VersionDetails {
     public String toString() {
         try {
             return String.format(
-                    "VersionDetails(%s, %s, %s, %s, %s)",
-                    getVersion(), getGitHash(), getGitHashFull(), getBranchName(), getIsCleanTag());
+                    "VersionDetails(" +
+                            "\n    version = %s," +
+                            "\n    versionCode = %d," +
+                            "\n    gitHash = %s," +
+                            "\n    gitHashFull = %s," +
+                            "\n    branchName = %s," +
+                            "\n    isClean = %s" +
+                            "\n)",
+                    getVersion(), getVersionCode(), getGitHash(), getGitHashFull(), getBranchName(), getIsCleanTag());
         } catch (IOException e) {
             return "";
         }

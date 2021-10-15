@@ -2,17 +2,25 @@ buildscript {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        mavenLocal()
+        maven {
+            url = uri("https://maven.pkg.github.com/wmontwe/gradle-git-version")
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
+        }
     }
     dependencies {
         classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.5.0'
         classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.2.0'
         classpath 'gradle.plugin.org.inferred:gradle-processors:3.6.0'
+        classpath 'eu.upwolf.gradle.gitversion:gradle-git-version:0.12.4'
     }
 }
 
 plugins {
     id 'com.gradle.plugin-publish' version '0.16.0'
-    id 'com.palantir.git-version' version '0.12.3'
     id 'com.palantir.idea-test-fix' version '0.1.0'
     id 'com.palantir.baseline' version '4.20.0'
     id 'com.palantir.consistent-versions' version '2.0.0'
@@ -22,6 +30,7 @@ plugins {
     id("scripts.publishing-config")
 }
 
+apply plugin: 'eu.upwolf.git-version'
 apply plugin: 'com.palantir.external-publish-jar'
 apply plugin: 'com.palantir.java-format'
 
@@ -49,6 +58,7 @@ dependencies {
     runtimeOnly configurations.groovyRuntimeClasspath
     implementation configurations.groovyImplementation
     implementation sourceSets.groovy.output
+    implementation 'net.swiftzer.semver:semver:1.1.1'
 
     annotationProcessor 'org.immutables:value'
     compileOnly 'org.immutables:value::annotations'
@@ -85,5 +95,11 @@ pluginBundle {
             id = 'eu.upwolf.git-version'
             displayName = 'Upwolf Gradle Git-Version'
         }
+    }
+}
+
+tasks.register('printVersionFull') {
+    doLast {
+        println versionDetails()
     }
 }
