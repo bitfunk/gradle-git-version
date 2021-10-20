@@ -58,7 +58,12 @@ final class VersionDetailsImpl implements VersionDetails {
             return -1;
         }
 
-        SemVer version = SemVer.parse(description());
+        String description = description();
+        if (description.startsWith("v")) {
+            description = description.substring(1);
+        }
+
+        SemVer version = SemVer.parse(description);
 
         return version.getMajor() * 10000 + version.getMinor() * 100 + version.getPatch();
     }
