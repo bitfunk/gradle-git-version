@@ -16,7 +16,9 @@
 
 package eu.upwolf.gradle.gitversion;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 
 public class GitVersionArgsTest {
     @Test
@@ -32,8 +34,11 @@ public class GitVersionArgsTest {
         new GitVersionArgs().setPrefix("Foo/Bar@");
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void require_dash_or_at_symbol_at_prefix_end() throws Exception {
-        new GitVersionArgs().setPrefix("v");
+        assertThatThrownBy(() -> {
+                    new GitVersionArgs().setPrefix("v");
+                })
+                .isInstanceOf(IllegalStateException.class);
     }
 }
