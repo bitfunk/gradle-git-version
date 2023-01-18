@@ -7,6 +7,8 @@ Git-Version Gradle Plugin
 [![Build Status](https://circleci.com/gh/palantir/gradle-git-version.svg?style=shield)](https://circleci.com/gh/palantir/gradle-git-version)
 [![Gradle Plugins Release](https://img.shields.io/github/release/palantir/gradle-git-version.svg)](https://plugins.gradle.org/plugin/com.palantir.git-version)
 
+! This fork is not maintained anymore, please use the original plugin or a new version written in Kotlin with slightly different behaviour: [Git Version](https://bitfunk.github.io/gradle-plugins/plugins/tool/git-version/).
+
 When applied, Git-Version adds two methods to the target project.
 
 The first, called `gitVersion()`, mimics `git describe --tags --always --first-parent` to determine a version string.
